@@ -42,7 +42,7 @@ $FilmQueryResult = mysqli_query($conn, $FilmQuery);
                     <a href="../controllers/film_update.php?id=<?php echo $data['id']; ?>"></a>
                 </td>
                 <td>
-                    <a href="../controllers/film_delete.php?id=<?php echo $data['id']; ?>"></a>
+                    <a href="../controllers/film_delete.php?id=<?php echo $data['id']; ?>">Deletar</a>
                 </td>
             <?php endwhile; ?>
         </tbody>

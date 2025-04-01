@@ -1,13 +1,16 @@
 <?php
 
-$server = "localhost";
-$user = "root";
-$password = "";
-$dbname = "cinapp_db";
+$host = 'localhost';
+$dbname = 'cinapp_db';
+$username = 'root';
+$password = '';
 
-$conn = new mysqli($server,  $user, $password, $dbname);
-
-if ($conn->connect_error){
-    die('Connection failed: '. $conn->connect_error);
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Erro na conexão: " . $e->getMessage());
 }
 
+return $pdo;
+?>

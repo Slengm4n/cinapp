@@ -29,7 +29,7 @@
 </head>
 <body>
     <h1>Atualizar Filme</h1>
-    <form action="update_film.php" method="post">
+    <form action="../controllers/film_update.php" method="post">
         <div class="form-group">
             <label for="id">ID do Filme:</label>
             <input type="number" id="id" name="id" required>
@@ -89,27 +89,41 @@
     </form>
 
     <script>
-        // Opcional: Carregar dados do filme quando o ID é informado
         document.getElementById('id').addEventListener('change', function() {
-            const filmId = this.value;
-            if (filmId) {
-                fetch(`get_film.php?id=${filmId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data) {
-                            document.getElementById('title').value = data.title || '';
-                            document.getElementById('synopsis').value = data.synopsis || '';
-                            document.getElementById('release_date').value = data.release_date || '';
-                            document.getElementById('duration').value = data.duration || '';
-                            document.getElementById('genre').value = data.genre || '';
-                            document.getElementById('country').value = data.country || '';
-                            document.getElementById('direction').value = data.direction || '';
-                            document.getElementById('distributor').value = data.distributor || '';
-                        }
-                    })
-                    .catch(error => console.error('Erro ao carregar filme:', error));
+    const filmId = this.value;
+    if (filmId) {
+        fetch(`../controllers/get_film.php?id=${filmId}`, {
+            method: 'GET', // Explícito que é GET
+            headers: {
+                'Accept': 'application/json'
             }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                console.error('Erro:', data.error);
+                return;
+            }
+            // Preenche os campos
+            document.getElementById('title').value = data.title || '';
+            document.getElementById('synopsis').value = data.synopsis || '';
+            document.getElementById('release_date').value = data.release_date || '';
+            document.getElementById('duration').value = data.duration || '';
+            document.getElementById('genre').value = data.genre || '';
+            document.getElementById('country').value = data.country || '';
+            document.getElementById('direction').value = data.direction || '';
+            document.getElementById('distributor').value = data.distributor || '';
+        })
+        .catch(error => {
+            console.error('Falha ao carregar filme:', error);
         });
+    }
+});
     </script>
 </body>
 </html>

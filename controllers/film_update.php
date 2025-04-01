@@ -21,7 +21,7 @@ if (!empty($id) && !empty($title)) {
         $stmt->bindParam(':synopsis', $synopsis, PDO::PARAM_STR);
         $stmt->bindParam(':release_date', $release_date, PDO::PARAM_STR);
         $stmt->bindParam(':duration', $duration, PDO::PARAM_INT);
-        $stmt->bindParam(':genre', $duration, PDO::PARAM_STR);
+        $stmt->bindParam(':genre', $genre, PDO::PARAM_STR);
         $stmt->bindParam(':country', $country, PDO::PARAM_STR);
         $stmt->bindParam(':direction', $direction, PDO::PARAM_STR);
         $stmt->bindParam(':distributor', $distributor, PDO::PARAM_STR);
@@ -29,11 +29,11 @@ if (!empty($id) && !empty($title)) {
         if ($stmt->execute()) {
             echo "Filme atualizado com sucesso!";
         } else {
-            echo "Erro ao atualizar filme :";
+            echo "Erro ao atualizar filme.";
         }
     } catch (PDOException $e) {
         echo "Erro: " . $e->getMessage();
     }
 } else {
-    echo "ID e títulos são obrigatórios!";
+    echo "ID e título são obrigatórios!";
 }
